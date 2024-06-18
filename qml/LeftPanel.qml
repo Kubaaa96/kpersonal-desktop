@@ -52,6 +52,7 @@ Rectangle {
                             color: "transparent"
                             border.color: itemMouseArea.containsMouse ? "red" : "transparent"
                             border.width: 1
+
                         }
                     }
                 }

@@ -4,6 +4,27 @@ import QtQuick.Controls 2.15
 Loader {
     id: root
     sourceComponent: menuBarComponent
+
+    Dialog {
+            id: quitDialog
+            title: "Quit"
+            modal: true
+            anchors.centerIn: parent
+            standardButtons: Dialog.Ok | Dialog.Cancel
+
+            onAccepted: {
+                console.log("Ok clicked")
+            }
+            onRejected: {
+                console.log("Cancel clicked")
+            }
+
+            Text {
+                text: "This is a dialog box!"
+                anchors.centerIn: parent
+            }
+        }
+
     Component {
         id: menuBarComponent
         MenuBar {
@@ -38,6 +59,7 @@ Loader {
                            text: qsTr("&Quit")
                            onTriggered: {
                                console.debug("Quit")
+                               quitDialog.open()
                            }
                        }
                    }
