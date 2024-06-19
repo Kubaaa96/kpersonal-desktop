@@ -14,7 +14,9 @@ find_package(Qt6 6.5 REQUIRED COMPONENTS Widgets)
 add_executable(kpersonal-desktop
         src/main.cpp
         src/MainWindow.cpp
-        src/MainWindow.hpp
+#        src/MainWindow.hpp
+        src/ListItemWidget.cpp
+        src/CustomDelegate.cpp
 )
 
 target_link_libraries(kpersonal-desktop PRIVATE Qt6::Widgets)
