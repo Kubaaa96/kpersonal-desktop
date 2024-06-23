@@ -11,14 +11,13 @@ class MainWindow final : public QMainWindow {
     Q_OBJECT
 
 public:
-
-
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow() override;
+    virtual ~MainWindow() override;
 
     private slots:
         void toggleLeftPanel();
-    void onItemClicked(QListWidgetItem *item);
+        void debug();
+    virtual void onItemClicked(QListWidgetItem *item);
 
 private:
     QWidget *leftPanel;

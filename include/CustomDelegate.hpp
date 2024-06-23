@@ -9,5 +9,6 @@ class CustomDelegate : public QStyledItemDelegate
 public:
     explicit CustomDelegate(QObject *parent = nullptr);
 
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    [[nodiscard]] QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+
 };
