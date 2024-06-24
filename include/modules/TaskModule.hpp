@@ -1,9 +1,8 @@
 #pragma once
 
-#include <QWidget>
 #include <QLabel>
-#include <QVBoxLayout>
 #include <QPushButton>
+
 class TaskModule : public QWidget
 {
     Q_OBJECT

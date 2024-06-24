@@ -1,5 +1,7 @@
 #include "ListItemWidget.hpp"
 
+#include <QVBoxLayout>
+
 ListItemWidget::ListItemWidget(const QString &text, QWidget *parent)
     : QWidget(parent) {
 

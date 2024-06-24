@@ -1,12 +1,12 @@
 #include "modules/TaskModule.hpp"
 
+#include <QVBoxLayout>
+
 TaskModule::TaskModule(QWidget *parent)
     : QWidget(parent)
 {
     moduleLabel = new QLabel("Task Module", this);
     moduleLabel->setAlignment(Qt::AlignCenter);
-
-
 
     floatingButton = new QPushButton("+", this);
 
@@ -20,9 +20,9 @@ TaskModule::TaskModule(QWidget *parent)
     );
     connect(floatingButton, &QPushButton::clicked, this, &TaskModule::onFloatingButtonClicked);
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    auto *layout = new QVBoxLayout(this);
     layout->addWidget(moduleLabel);
-    layout->addStretch();  // To center the label vertically
+    layout->addStretch();
 
     setLayout(layout);
 }

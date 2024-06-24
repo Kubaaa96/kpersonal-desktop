@@ -23,8 +23,23 @@ add_executable(kpersonal-desktop
         include/CustomDelegate.hpp
         src/CustomDelegate.cpp
 
+        include/modules/CalendarModule.hpp
+        src/modules/CalendarModule.cpp
+        include/modules/FlashcardsModule.hpp
+        src/modules/FlashcardsModule.cpp
+        include/modules/HabitModule.hpp
+        src/modules/HabitModule.cpp
+        include/modules/KanbanModule.hpp
+        src/modules/KanbanModule.cpp
+        include/modules/ProjectModule.hpp
+        src/modules/ProjectModule.cpp
         include/modules/TaskModule.hpp
         src/modules/TaskModule.cpp
+        include/modules/TimeModule.hpp
+        src/modules/TimeModule.cpp
+        include/modules/WikiModule.hpp
+        src/modules/WikiModule.cpp
+
 )
 
 target_include_directories(kpersonal-desktop PRIVATE ${PROJECT_SOURCE_DIR}/include)

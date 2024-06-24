@@ -1,7 +1,15 @@
 #include "ListItemWidget.hpp"
 #include "CustomDelegate.hpp"
 #include "MainWindow.hpp"
+#include "modules/CalendarModule.hpp"
+#include "modules/FlashcardsModule.hpp"
+#include "modules/HabitModule.hpp"
+#include "modules/KanbanModule.hpp"
+#include "modules/ProjectModule.hpp"
 #include "modules/TaskModule.hpp"
+#include "modules/TimeModule.hpp"
+#include "modules/WikiModule.hpp"
+
 
 
 #include <QPushButton>
@@ -30,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     listWidget->setItemDelegate(new CustomDelegate(this));
     listWidget->setFrameShape(QFrame::NoFrame);
 
-    QStringList items = {"Task", "Time", "Flashcards", "Habit", "Wiki", "Project", "Timeline", "Calendar", "Kanban", "List"};
+    QStringList items = {"Task", "Time", "Flashcards", "Habit", "Wiki", "Project", "Calendar", "Kanban"};
     for (const QString &item : items) {
         auto *listItem = new QListWidgetItem(listWidget);
         auto *itemWidget = new ListItemWidget("Name: " + item, listWidget);
@@ -50,15 +58,13 @@ MainWindow::MainWindow(QWidget *parent)
     // Right Panel (Stacked Widget)
     stackedWidget = new QStackedWidget(this);
     stackedWidget->addWidget(new TaskModule(this));
-    stackedWidget->addWidget(new QLabel("Time Module", this));
-    stackedWidget->addWidget(new QLabel("Flashcards Module", this));
-    stackedWidget->addWidget(new QLabel("Habit Module", this));
-    stackedWidget->addWidget(new QLabel("Wiki Module", this));
-    stackedWidget->addWidget(new QLabel("Project Module", this));
-    stackedWidget->addWidget(new QLabel("Timeline Module", this));
-    stackedWidget->addWidget(new QLabel("Calendar Module", this));
-    stackedWidget->addWidget(new QLabel("Kanban Module", this));
-    stackedWidget->addWidget(new QLabel("List Module", this));
+    stackedWidget->addWidget(new TimeModule( this));
+    stackedWidget->addWidget(new FlashcardsModule(this));
+    stackedWidget->addWidget(new HabitModule(this));
+    stackedWidget->addWidget(new WikiModule(this));
+    stackedWidget->addWidget(new ProjectModule(this));
+    stackedWidget->addWidget(new CalendarModule(this));
+    stackedWidget->addWidget(new KanbanModule(this));
 
     // Add widgets to main layout
     mainLayout->addWidget(leftPanel);

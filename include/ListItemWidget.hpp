@@ -1,8 +1,7 @@
 #pragma once
 
-#include <QWidget>
+
 #include <QLabel>
-#include <QVBoxLayout>
 
 class ListItemWidget : public QWidget {
     Q_OBJECT
