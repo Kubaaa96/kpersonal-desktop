@@ -1,21 +1,15 @@
 #include "ListItemWidget.hpp"
 #include "CustomDelegate.hpp"
 #include "MainWindow.hpp"
-#include "modules/CalendarModule.hpp"
-#include "modules/FlashcardsModule.hpp"
-#include "modules/HabitModule.hpp"
-#include "modules/KanbanModule.hpp"
-#include "modules/ProjectModule.hpp"
-#include "modules/TaskModule.hpp"
-#include "modules/TimeModule.hpp"
-#include "modules/WikiModule.hpp"
 
-
-
+#include <QApplication>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QListWidget>
-#include <QDialog>
+#include <QMessageBox>
+#include <QCloseEvent>
+
+#include "StackedModuleWidget.hpp"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent) {
@@ -55,21 +49,12 @@ MainWindow::MainWindow(QWidget *parent)
     toggleButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     connect(toggleButton, &QPushButton::clicked, this, &MainWindow::toggleLeftPanel);
 
-    // Right Panel (Stacked Widget)
-    stackedWidget = new QStackedWidget(this);
-    stackedWidget->addWidget(new TaskModule(this));
-    stackedWidget->addWidget(new TimeModule( this));
-    stackedWidget->addWidget(new FlashcardsModule(this));
-    stackedWidget->addWidget(new HabitModule(this));
-    stackedWidget->addWidget(new WikiModule(this));
-    stackedWidget->addWidget(new ProjectModule(this));
-    stackedWidget->addWidget(new CalendarModule(this));
-    stackedWidget->addWidget(new KanbanModule(this));
-
     // Add widgets to main layout
     mainLayout->addWidget(leftPanel);
     mainLayout->addWidget(toggleButton);
-    mainLayout->addWidget(stackedWidget);
+
+    stackedModuleWidget = new StackedModuleWidget(this);
+    mainLayout->addWidget(stackedModuleWidget);
 
     // Menu Bar
     QMenuBar *menuBar = new QMenuBar(this);
@@ -104,29 +89,9 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar->addMenu(actionsMenu);
     menuBar->addMenu(helpMenu);
 
-    // // Quit Dialog
-    auto *quitDialog = new QDialog(this);
-    quitDialog->setWindowTitle("Quit");
-    quitDialog->setModal(true);
-    quitDialog->setLayout(new QVBoxLayout);
-    auto *quitLabel = new QLabel("This is a dialog box!", quitDialog);
-    quitDialog->layout()->addWidget(quitLabel);
-    auto *okButton = new QPushButton("Ok", quitDialog);
-    auto *cancelButton = new QPushButton("Cancel", quitDialog);
-    quitDialog->layout()->addWidget(okButton);
-    quitDialog->layout()->addWidget(cancelButton);
-    connect(okButton, &QPushButton::clicked, quitDialog, &QDialog::accept);
-    connect(cancelButton, &QPushButton::clicked, quitDialog, &QDialog::reject);
+    connect(quitAction, &QAction::triggered, this, &MainWindow::handleCloseAction);
 
-    connect(quitDialog, &QDialog::accepted, this, []() {
-        qDebug() << "Quit dialog accepted";
-    });
 
-    connect(quitDialog, &QDialog::rejected, this, []() {
-        qDebug() << "Quit dialog rejected";
-    });
-
-    connect(quitAction, &QAction::triggered, quitDialog, &QDialog::exec);
 }
 
 MainWindow::~MainWindow() {
@@ -146,11 +111,24 @@ void MainWindow::debug() {
     qDebug("test");
 }
 
+void MainWindow::handleCloseAction() {
+    close();
+}
+
 void MainWindow::onItemClicked(QListWidgetItem *item) {
     int index = listWidget->row(item);
-    if (index >= 0 && index < stackedWidget->count()) {
-        stackedWidget->setCurrentIndex(index);
+    if (index >= 0 && index < stackedModuleWidget->count()) {
+        stackedModuleWidget->setCurrentIndex(index);
     }
+}
+
+void MainWindow::closeEvent(QCloseEvent *event) {
+    auto resultButton = QMessageBox::question(
+    this, "Exit Confirmation",
+    "Are you sure you want to exit?\n",
+    QMessageBox::No | QMessageBox::Yes,
+    QMessageBox::Yes);
+    resultButton == QMessageBox::Yes ? event->accept() : event->ignore();
 }
 
 void MainWindow::initialize() {

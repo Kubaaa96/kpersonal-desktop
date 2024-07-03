@@ -23,6 +23,9 @@ add_executable(kpersonal-desktop
         include/CustomDelegate.hpp
         src/CustomDelegate.cpp
 
+        include/StackedModuleWidget.hpp
+        src/StackedModuleWidget.cpp
+
         include/modules/CalendarModule.hpp
         src/modules/CalendarModule.cpp
         include/modules/FlashcardsModule.hpp
@@ -39,7 +42,6 @@ add_executable(kpersonal-desktop
         src/modules/TimeModule.cpp
         include/modules/WikiModule.hpp
         src/modules/WikiModule.cpp
-
 )
 
 target_include_directories(kpersonal-desktop PRIVATE ${PROJECT_SOURCE_DIR}/include)

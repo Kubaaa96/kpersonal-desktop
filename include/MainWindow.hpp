@@ -12,12 +12,16 @@ class MainWindow final : public QMainWindow {
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    virtual ~MainWindow() override;
+    ~MainWindow() override;
 
     private slots:
         void toggleLeftPanel();
         void debug();
-    virtual void onItemClicked(QListWidgetItem *item);
+        void handleCloseAction();
+        void onItemClicked(QListWidgetItem *item);
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     QWidget *leftPanel;
@@ -25,6 +29,8 @@ private:
     QWidget *rightPanel;
     QStackedWidget *stackedWidget;
     QPushButton *toggleButton;
+
+    class StackedModuleWidget *stackedModuleWidget;
 
     void initialize();
 };
