@@ -12,19 +12,7 @@
 #include "MenuBar.hpp"
 #include "StackedModuleWidget.hpp"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent) {
-
-    initialize();
-
-    // Central Widget
-    auto *centralWidget = new QWidget(this);
-    setCentralWidget(centralWidget);
-
-    // Main Layout
-    auto *mainLayout = new QHBoxLayout(centralWidget);
-
-    // Left Panel
+void MainWindow::populateLeftPanel() {
     leftPanel = new QWidget(this);
     leftPanel->setFixedWidth(200);
     auto *leftLayout = new QVBoxLayout(leftPanel);
@@ -40,27 +28,48 @@ MainWindow::MainWindow(QWidget *parent)
         listItem->setSizeHint(itemWidget->sizeHint());
         listWidget->setItemWidget(listItem, itemWidget);
     }
-
+    listWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(listWidget, &QListWidget::itemClicked, this, &MainWindow::onItemClicked);
     leftLayout->addWidget(listWidget);
+}
 
-    // Toggle Button
-    toggleButton = new QPushButton("<", this);
-    toggleButton->setMaximumWidth(20);
-    toggleButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
-    connect(toggleButton, &QPushButton::clicked, this, &MainWindow::toggleLeftPanel);
-
-    // Add widgets to main layout
+void MainWindow::addWidgetsToMainLayout(QHBoxLayout *mainLayout) {
     mainLayout->addWidget(leftPanel);
     mainLayout->addWidget(toggleButton);
 
     stackedModuleWidget = new StackedModuleWidget(this);
     mainLayout->addWidget(stackedModuleWidget);
+}
 
-    
+void MainWindow::setupToggleLeftPanelButton() {
+    toggleButton = new QPushButton("<", this);
+    toggleButton->setMaximumWidth(20);
+    toggleButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
+    connect(toggleButton, &QPushButton::clicked, this, &MainWindow::toggleLeftPanel);
+}
+
+void MainWindow::setCustomMenuBar() {
     menuBar = new MenuBar(this);
     setMenuBar(menuBar);
     connect(menuBar->getQuitAction(), &QAction::triggered, this, &MainWindow::handleCloseAction);
+}
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent) {
+
+    initialize();
+
+    auto *centralWidget = new QWidget(this);
+    setCentralWidget(centralWidget);
+
+    populateLeftPanel();
+
+    setupToggleLeftPanelButton();
+
+    auto *mainLayout = new QHBoxLayout(centralWidget);
+    addWidgetsToMainLayout(mainLayout);
+
+    setCustomMenuBar();
 }
 
 MainWindow::~MainWindow() {
@@ -74,10 +83,6 @@ void MainWindow::toggleLeftPanel() {
         leftPanel->show();
         toggleButton->setText("<");
     }
-}
-
-void MainWindow::debug() {
-    qDebug("test");
 }
 
 void MainWindow::handleCloseAction() {

@@ -11,8 +11,5 @@ ListItemWidget::ListItemWidget(const QString &text, QWidget *parent)
     label = new QLabel(text, this);
     layout->addWidget(label);
 
-    // label1 = new QLabel(text, this);
-    // layout->addWidget(label1);
-
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }

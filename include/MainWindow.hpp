@@ -1,5 +1,6 @@
 #pragma once
 
+#include <qboxlayout.h>
 #include <QMainWindow>
 #include <QStackedWidget>
 #include <QListWidget>
@@ -11,12 +12,19 @@ class MainWindow final : public QMainWindow {
     Q_OBJECT
 
 public:
+    void populateLeftPanel();
+
+    void addWidgetsToMainLayout(QHBoxLayout *mainLayout);
+
+    void setupToggleLeftPanelButton();
+
+    void setCustomMenuBar();
+
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
 
     private slots:
         void toggleLeftPanel();
-        void debug();
         void handleCloseAction();
         void onItemClicked(QListWidgetItem *item);
 
