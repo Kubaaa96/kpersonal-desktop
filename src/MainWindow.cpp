@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 
+#include "MenuBar.hpp"
 #include "StackedModuleWidget.hpp"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -56,42 +57,10 @@ MainWindow::MainWindow(QWidget *parent)
     stackedModuleWidget = new StackedModuleWidget(this);
     mainLayout->addWidget(stackedModuleWidget);
 
-    // Menu Bar
-    QMenuBar *menuBar = new QMenuBar(this);
+    
+    menuBar = new MenuBar(this);
     setMenuBar(menuBar);
-
-    auto *fileMenu = new QMenu("&File", this);
-    auto *newAction = new QAction("&New...", this);
-    auto *openAction = new QAction("&Open...", this);
-    auto *saveAction = new QAction("&Save", this);
-    auto *saveAsAction = new QAction("Save &As...", this);
-    auto *quitAction = new QAction("&Quit", this);
-    fileMenu->addAction(newAction);
-    fileMenu->addAction(openAction);
-    fileMenu->addAction(saveAction);
-    fileMenu->addAction(saveAsAction);
-    fileMenu->addSeparator();
-    fileMenu->addAction(quitAction);
-
-    auto *actionsMenu = new QMenu("&Actions", this);
-    auto *exportAction = new QAction("&Export", this);
-    auto *statisticsAction = new QAction("&Statistics", this);
-    auto *optionsAction = new QAction("&Options", this);
-    actionsMenu->addAction(exportAction);
-    actionsMenu->addAction(statisticsAction);
-    actionsMenu->addAction(optionsAction);
-
-    auto *helpMenu = new QMenu("&Help", this);
-    auto *aboutAction = new QAction("&About", this);
-    helpMenu->addAction(aboutAction);
-
-    menuBar->addMenu(fileMenu);
-    menuBar->addMenu(actionsMenu);
-    menuBar->addMenu(helpMenu);
-
-    connect(quitAction, &QAction::triggered, this, &MainWindow::handleCloseAction);
-
-
+    connect(menuBar->getQuitAction(), &QAction::triggered, this, &MainWindow::handleCloseAction);
 }
 
 MainWindow::~MainWindow() {

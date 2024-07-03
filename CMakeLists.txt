@@ -26,6 +26,9 @@ add_executable(kpersonal-desktop
         include/StackedModuleWidget.hpp
         src/StackedModuleWidget.cpp
 
+        include/MenuBar.hpp
+        src/MenuBar.cpp
+
         include/modules/CalendarModule.hpp
         src/modules/CalendarModule.cpp
         include/modules/FlashcardsModule.hpp

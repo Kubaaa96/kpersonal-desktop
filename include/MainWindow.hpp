@@ -32,5 +32,7 @@ private:
 
     class StackedModuleWidget *stackedModuleWidget;
 
+    class MenuBar *menuBar;
+
     void initialize();
 };
